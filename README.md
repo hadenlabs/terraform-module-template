@@ -35,16 +35,15 @@ This is a list of plugins that need to be installed previously to enjoy all the 
 
 ## Usage
 
-# How to use this project
+# How to use this Module
 
-```hcl
-  module "main" {
-    source  = "hadenlabs/terraform-module-template/aws"
-    version = "0.0.0"
-  }
+Full working modules can be found in [modules](/modules) folder.
+
+## Replace name project to New Project
+
+```bash
+agr 'terraform-module-template' 'new-project'
 ```
-
-Full working examples can be found in [examples](./examples) folder.
 
 ## Examples
 
@@ -55,13 +54,27 @@ Full working examples can be found in [examples](./examples) folder.
 <!-- Include: ./../disclaimer.md -->
 <!-- Include: ac:toc -->
 
-### common
+## Common
 
 ```hcl
-  module "main" {
-    source  = "hadenlabs/terraform-module-template/aws"
-    version = "0.0.0"
-  }
+locals {
+  tags = merge(
+    var.tags,
+    {
+      ManagedBy = "terraform"
+    }
+  )
+}
+
+module "main" {
+ source = git::https://github.com/hadenlabs/terraform-module-template.git//modules/basic?ref=0.0.0
+  module_enabled = var.module_enabled
+  stage          = var.stage
+  namespace      = var.namespace
+  tags           = local.tags
+  use_fullname   = var.use_fullname
+  name           = var.name
+}
 ```
 
  <!-- markdown-link-check-disable -->
@@ -98,7 +111,7 @@ No outputs.
 
 ## Help
 
-**Got a question?**
+### Got a question?
 
 File a GitHub [issue](https://github.com/hadenlabs/terraform-module-template/issues).
 
@@ -123,7 +136,7 @@ Using the given version number of `MAJOR.MINOR.PATCH`, we apply the following co
 
 ## Copyright
 
-Copyright © 2018-2022 [Hadenlabs](https://hadenlabs.com)
+Copyright © 2018-2025 [Hadenlabs](https://hadenlabs.com)
 
 ## Trademarks
 
